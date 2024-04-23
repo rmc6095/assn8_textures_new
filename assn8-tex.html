@@ -80,9 +80,10 @@
          vec4 gradient(vec2 tex_coords) {
              float s = tex_coords[0];
              float t = tex_coords[1];
-             float changea = sin(t*100.0);
-             float changeb = cos(t*100.0);
-             return vec4(changea*s, changea*t, 1.0-s, 1.0);
+             float change = sin(t*50.0)*tan(s*50.0);
+
+             float facets = 0.1 + (s - t);
+             return vec4(1.0, 0.40-0.17*s, 0.17+0.40*t, 0.7+change);
              //         (RED, GREEN, BLUE, ALPHA)
          }
 
