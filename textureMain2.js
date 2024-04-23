@@ -9,6 +9,9 @@
 
   // the textures
   let worldTexture;
+
+  // the textures
+  let myimageTexture;
   
   // VAOs for the objects
   var mySphere = null;
@@ -48,14 +51,20 @@ function setUpTextures(){
     
     // get some texture space from the gpu
     worldTexture = gl.createTexture();
-    
     // load the actual image
     const worldImage = new Image();
     worldImage.src = '1_earth_16k.jpg';
-
     worldImage.onload = () => {
         doLoad (worldTexture, worldImage);
     };
+
+    myimageTexture = gl.createTexture();
+    const myimageImage = new Image();
+    myimageImage.src = 'nighttime.jpg';
+    myimageImage.onload = () => {
+        doLoad(myimageTexture, myimageImage);
+    }
+
 }
 
 //
@@ -81,7 +90,11 @@ function drawCurrentShape () {
     // set up texture uniform & other uniforms that you might
     // have added to the shader
     gl.activeTexture (gl.TEXTURE0);
-    gl.bindTexture (gl.TEXTURE_2D, worldTexture);
+    if (curTexture == "globe") {
+        gl.bindTexture (gl.TEXTURE_2D, worldTexture);
+    } else if (curTexture == "myimage") {
+        gl.bindTexture (gl.TEXTURE_2D, myimageTexture);
+    }
     gl.uniform1i (program.uTheTexture, 0);
     
     // set up rotation uniform
