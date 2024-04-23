@@ -74,8 +74,24 @@
          // Color that is the result of this shader
          out vec4 fragColor;
 
+         // are we doing procedural?
+         uniform bool isProcedural;
+
+         vec4 gradient(vec2 tex_coords) {
+             float s = tex_coords[0];
+             float t = tex_coords[1];
+             float changea = sin(t*100.0);
+             float changeb = cos(t*100.0);
+             return vec4(changea*s, changea*t, 1.0-s, 1.0);
+             //         (RED, GREEN, BLUE, ALPHA)
+         }
+
          void main(void) {
-             fragColor = texture (theTexture, theUV);
+             if (isProcedural) {
+                fragColor = gradient(theUV);
+             } else {
+                fragColor = texture (theTexture, theUV);
+             }
          }
 
     </script>

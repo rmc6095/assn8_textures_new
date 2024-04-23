@@ -92,8 +92,12 @@ function drawCurrentShape () {
     gl.activeTexture (gl.TEXTURE0);
     if (curTexture == "globe") {
         gl.bindTexture (gl.TEXTURE_2D, worldTexture);
+        gl.uniform1i (program.isProcedural, false);
     } else if (curTexture == "myimage") {
         gl.bindTexture (gl.TEXTURE_2D, myimageTexture);
+        gl.uniform1i (program.isProcedural, false);
+    } else if (curTexture == "proc") {
+        gl.uniform1i (program.isProcedural, true);
     }
     gl.uniform1i (program.uTheTexture, 0);
     
@@ -131,6 +135,7 @@ function initProgram (vertexid, fragmentid) {
   // for easy access later in the code
   program.aVertexPosition = gl.getAttribLocation(program, 'aVertexPosition');
   program.aUV = gl.getAttribLocation(program, 'aUV');
+  program.isProcedural = gl.getUniformLocation(program, 'isProcedural');
     
   // uniforms - you will need to add references for any additional
   // uniforms that you add to your shaders
